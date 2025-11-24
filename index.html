@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Informe - Spring Framework</title>
+<style>
+    body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.7;
+        margin: 40px;
+        background: #f7f7f7;
+        color: #222;
+    }
+    h1, h2, h3 {
+        color: #0a4d78;
+        margin-bottom: 10px;
+    }
+    h1 {
+        font-size: 32px;
+        text-transform: uppercase;
+        border-bottom: 3px solid #0a4d78;
+        padding-bottom: 10px;
+    }
+    pre {
+        background: #1e1e1e;
+        color: #e8e8e8;
+        padding: 15px;
+        border-radius: 8px;
+        overflow-x: auto;
+        font-size: 15px;
+    }
+    .section {
+        background: white;
+        padding: 25px;
+        border-radius: 10px;
+        margin-bottom: 30px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    }
+</style>
+</head>
+<body>
+
+<h1>Spring Framework</h1>
+
+<div class="section">
+<h2>Introducción</h2>
+<p>En el desarrollo de aplicaciones empresariales basadas en Java, es necesario contar con herramientas que permitan crear sistemas robustos, escalables, modulares y fáciles de mantener. Con ese propósito nace <strong>Spring Framework</strong>, una de las plataformas más completas y utilizadas en el ecosistema Java.</p>
+<p>Spring proporciona un conjunto amplio de funcionalidades que simplifican la creación de aplicaciones complejas, ofreciendo una arquitectura flexible, un fuerte enfoque en la inversión de control y un soporte integral para tecnologías modernas como microservicios, bases de datos, seguridad, MVC, entre otras.</p>
+<p>Este informe presenta una descripción detallada del framework, sus características principales y sus funcionalidades, acompañadas de ejemplos prácticos que ilustran su aplicación en proyectos reales.</p>
+</div>
+
+<div class="section">
+<h2>¿Qué es Spring Framework?</h2>
+<p>Spring Framework es un framework de código abierto para el desarrollo de aplicaciones Java. Está diseñado para simplificar la creación de aplicaciones empresariales mediante una arquitectura modular basada en el <strong>Inversion of Control (IoC)</strong> y la <strong>Inyección de Dependencias (DI)</strong>.</p>
+<p>Spring reduce la complejidad del desarrollo proporcionando herramientas para:</p>
+<ul>
+    <li>Gestión de dependencias</li>
+    <li>Desarrollo web</li>
+    <li>Persistencia de datos</li>
+    <li>Seguridad</li>
+    <li>Transacciones</li>
+    <li>Programación reactiva</li>
+    <li>Microservicios</li>
+</ul>
+<p>También es altamente extensible e integra tecnologías como Hibernate, JPA, Thymeleaf, Maven, Tomcat y muchas más.</p>
+</div>
+
+<div class="section">
+<h2>Principales características de Spring Framework</h2>
+<ol>
+    <li><strong>Inversión de Control (IoC)</strong></li>
+    <li><strong>Inyección de Dependencias (DI)</strong></li>
+    <li><strong>Programación orientada a aspectos (AOP)</strong></li>
+    <li><strong>Contenedor ligero</strong></li>
+    <li><strong>Integración con frameworks externos</strong></li>
+    <li><strong>Modularidad</strong></li>
+    <li><strong>Spring Boot</strong></li>
+</ol>
+</div>
+
+<div class="section">
+<h2>Funcionalidades de Spring Framework</h2>
+
+<h3>1. IoC e Inyección de Dependencias (DI)</h3>
+<p>Spring administra la creación y ciclo de vida de los objetos mediante anotaciones.</p>
+<pre>@Service
+public class UserService {
+
+    @Autowired
+    private UserRepository userRepository;
+
+    public void saveUser(User u) {
+        userRepository.save(u);
+    }
+}</pre>
+
+<h3>2. Spring MVC</h3>
+<p>Permite construir aplicaciones web basadas en el patrón Modelo-Vista-Controlador.</p>
+<pre>@Controller
+public class HomeController {
+
+    @GetMapping("/hello")
+    @ResponseBody
+    public String sayHello() {
+        return "Hola desde Spring MVC";
+    }
+}</pre>
+
+<h3>3. Manejo de datos con Spring Data</h3>
+<pre>public interface UserRepository extends JpaRepository&lt;User, Long&gt; {
+}</pre>
+
+<h3>4. Spring Security</h3>
+<pre>@Configuration
+@EnableWebSecurity
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http
+            .authorizeRequests()
+            .anyRequest().authenticated()
+            .and()
+            .formLogin();
+    }
+}</pre>
+
+<h3>5. Spring AOP</h3>
+<pre>@Aspect
+@Component
+public class LogAspect {
+
+    @Before("execution(* com.app.service.*.*(..))")
+    public void logBefore() {
+        System.out.println("Método ejecutado");
+    }
+}</pre>
+
+<h3>6. Spring Transaction Management</h3>
+<pre>@Service
+public class BankService {
+
+    @Transactional
+    public void transferMoney(Account a, Account b, double amount) {
+        a.withdraw(amount);
+        b.deposit(amount);
+    }
+}</pre>
+
+<h3>7. Spring Boot</h3>
+<pre>@SpringBootApplication
+public class App {
+    public static void main(String[] args) {
+        SpringApplication.run(App.class, args);
+    }
+}</pre>
+
+<h3>8. Creación de APIs REST</h3>
+<pre>@RestController
+@RequestMapping("/users")
+public class UserController {
+
+    @GetMapping
+    public List&lt;User&gt; getUsers() {
+        return List.of(new User(1, "Ana"), new User(2, "Luis"));
+    }
+}</pre>
+
+<h3>9. Configuración de propiedades</h3>
+<pre>@Value("${app.name}")
+private String appName;</pre>
+
+<h3>10. Microservicios con Spring Cloud</h3>
+<pre>@EnableEurekaClient
+@SpringBootApplication
+public class MyService {
+    public static void main(String[] args) {
+        SpringApplication.run(MyService.class, args);
+    }
+}</pre>
+</div>
+
+<div class="section">
+<h2>Conclusión</h2>
+<p>Spring Framework se ha consolidado como el estándar en el desarrollo de aplicaciones Java gracias a su arquitectura flexible, modular y altamente escalable. Su soporte para IoC, DI, programación web, persistencia, seguridad y microservicios lo convierten en una herramienta completa y adaptable.</p>
+<p>La llegada de Spring Boot redujo drásticamente la complejidad, permitiendo a los desarrolladores enfocarse más en la lógica del negocio que en configuraciones técnicas.</p>
+<p>En resumen, Spring permite construir aplicaciones seguras, organizadas, mantenibles y preparadas para los desafíos tecnológicos modernos.</p>
+</div>
+
+</body>
+</html>
